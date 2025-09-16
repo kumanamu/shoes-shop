@@ -1,19 +1,19 @@
-function Detail(){
-  return(
-    <div className="container">
-      <div className="row">
-        <div className="col-md-6">
-          <img src="/images/shoes1.jpg" 
-            width="100%" />
-        </div>
-        <div className="col-md-6">
-          <h4 className="pt-5">상품명</h4>
-          <p>상품설명</p>
-          <p>150000원</p>
-          <button className="btn btn-danger">주문하기</button>
-        </div>
-      </div>
+// src/Detail/index.jsx
+import { useParams } from "react-router-dom";
+import About from "../about";
+import data from "../data/data";
+
+function Detail() {
+  const { id } = useParams();
+  const shoes = data.find((item) => item.id === Number(id));
+
+  if (!shoes) return <div>상품을 찾을 수 없습니다.</div>;
+
+  return (
+    <div>
+      <About shoes={shoes} />
     </div>
-  )
+  );
 }
+
 export default Detail;
