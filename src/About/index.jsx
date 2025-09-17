@@ -1,19 +1,21 @@
-// src/about/index.jsx
-import "./about.css";
+import "./About.css"
+import { Outlet } from "react-router-dom";
 
-function About({ shoes }) {
+function About(){
   return (
-    <div className="about">
-      <img
-        src={`https://zzzmini.github.io/images/shoes${shoes.id + 1}.jpg`}
-        alt={shoes.title}
-        width="50%"
-      />
-      <h2>{shoes.title}</h2>
-      <p>{shoes.content}</p>
-      <p>{shoes.price.toLocaleString()}원</p>
-    </div>
-  );
+    <div>
+      <div className="about_container">
+          <h1>About SneakerShop</h1>
+          <p>Welcome to SneakerShop, your ultimate destination for high-quality sneakers. Our mission is to provide top-notch footwear for every occasion.</p>
+          <p>From sports performance shoes to casual lifestyle sneakers, we bring you the best selection from the world's leading brands.</p>
+          <p>Shop with confidence and step up your sneaker game with us!</p>
+          <div className="footer">&copy; 2025 SneakerShop. All rights reserved.</div>        
+      </div>
+      <div className="text-center">
+        {/* Outlet 자리에 중첩라우터로 지정된 컴포넌트가 들어옵니다. */}
+        <Outlet></Outlet>
+      </div>
+    </div> 
+  )
 }
-
 export default About;

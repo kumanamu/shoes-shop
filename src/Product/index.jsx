@@ -1,24 +1,18 @@
-// src/Product/index.jsx
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
-function Product({ shoes }) {
+function Product({shoes}) {
+  const image = `/images/shoes${shoes.id + 1}.jpg`
+  const navigate = useNavigate();
+
   return (
-    <div>
-      <Link
-        to={`/detail/${shoes.id}`}
-        style={{ textDecoration: "none", color: "inherit" }}
-      >
-        <img
-          src={`https://zzzmini.github.io/images/shoes${shoes.id + 1}.jpg`}
-          alt={shoes.title}
-          width="80%"
-        />
-        <h4>{shoes.title}</h4>
-        <p>{shoes.content}</p>
-        <p>{shoes.price.toLocaleString()}원</p>
-      </Link>
-    </div>
+    <>
+      <img onClick={()=>{
+        navigate(`/detail/${shoes.id}`)
+      }}
+        src={image} width="80%" />
+      <h4>{shoes.title}</h4>
+      <p>{shoes.content}</p>
+    </>
   );
 }
-
 export default Product;
