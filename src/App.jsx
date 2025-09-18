@@ -2,12 +2,12 @@ import "./App.css";
 import AppNavBar from "./AppNavBar";
 // assets 폴더 내의 이미지 사용법 -> import 해서 사용
 import bg_png from "./assets/images/bg.png"
-import data from "./Data/data";
+import data from "./data/data";
 import { useState } from "react";
 import { Routes, Route } from "react-router-dom";
 import Detail from "./Detail";
 import About from "./About";
-import Home from "./home";
+import Home from "./Home";
 
 function App() {
   // 상품정보를 갖는 product 스테이트를 만든다.
@@ -26,7 +26,7 @@ function App() {
       {/* Routing 정보를 한꺼번에 모아놓는 장소 */}
       {/* 스프링에서 사용하는 컨트롤러 클래스 */}
       <Routes>
-        <Route path="/" element={<Home product={product}/>} />
+        <Route path="/" element={<Home product={product} setProduct={setProduct}/>} />
         {/* /detail/2 -> PathVariable 설정 법 */}
         <Route path="/detail/:id" element={<Detail product={product}/>} />
         <Route path="/cart" element={<div>장바구니페이지</div>} />
