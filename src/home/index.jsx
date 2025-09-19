@@ -1,90 +1,90 @@
-import {Container, Row, Col, Button} from 'react-bootstrap';
-import Product from '../Product';
-import axios from 'axios';
-import { useState } from 'react';
-// assets 폴더 내의 이미지 사용법 -> import 해서 사용
-import bg_png from "../assets/images/bg.png"
+import { Container, Row, Col, Button } from "react-bootstrap";
+import Product from "../Product";
+import axios from "axios";
+import { useState } from "react";
+import bg_png from "../assets/images/bg.png";
 
-function Home({product, setProduct}){
-  // 몇 번 눌렀는지 체크하는 스테이트
-  let [dataLoadingCount, setDataLoadingCount] = useState(0)
+function Home({ product, setProduct }) {
+  let [dataLoadingCount, setDataLoadingCount] = useState(0);
+  let [loadingState, setLoadingState] = useState(false);
 
-  // 로딩 중 처리 스테이트
-  let [loadingState, setLoadingState] = useState(false)
+  const loadData = (url) => {
+    setLoadingState(true);
 
-  return(
+    axios
+      .get(url)
+      .then((result) => {
+        const offset = product.length;
+
+        const newData = result.data.map((item, index) => {
+          const newId = offset + index; // 고유 id 부여
+          return {
+            ...item,
+            id: newId,
+            features: item.features ?? [
+              "추가 데이터 - 기본 특징 1",
+              "추가 데이터 - 기본 특징 2",
+            ],
+            // id 기반으로 고정된 이미지 매칭
+            image: item.image ?? `/images/shoes${newId + 1}.jpg`,
+          };
+        });
+
+        setProduct([...product, ...newData]);
+      })
+      .catch((error) => console.error("가져오기 실패", error))
+      .finally(() => setLoadingState(false));
+  };
+
+  return (
     <div>
-      {/* 메인 대문사진 영역 시작 */}
-      <div className="main-bg" 
-        style={{backgroundImage: `url('${bg_png}')`}}  
+      {/* 메인 배경 */}
+      <div
+        className="main-bg"
+        style={{ backgroundImage: `url('${bg_png}')` }}
       />
-      {/* 메인 대문사진 영역 끝 */}
-      {/* 상품진열영역 시작 */}
+
+      {/* 상품 진열 */}
       <Container>
         <Row xs={3}>
-          {
-            product.map((shoes, _)=>{
-              return(
-                <Col key={shoes.id} className="text-center">
-                  {/* Product 콤포넌트 자리 */}
-                  <Product shoes={shoes}/>
-                </Col>
-              )
-            })
-          }
+          {product.map((shoes) => (
+            <Col key={shoes.id} className="text-center">
+              <Product shoes={shoes} />
+            </Col>
+          ))}
         </Row>
       </Container>
-      {/* 상품진열영역 끝 */}
+
       {/* 로딩 메시지 */}
-      <div className='text-center my-3'>
-          {loadingState && <div>Loading .... Please wait!</div>}
+      <div className="text-center my-3">
+        {loadingState && <div>Loading .... Please wait!</div>}
       </div>
 
-      <div className='d-flex justify-content-center
-          align-items-center'>
-          <Button variant="primary" size="lg"
-            onClick={async()=>{
-              let getUrl = ''
-              if(dataLoadingCount == 0){
-                getUrl = 'https://zzzmini.github.io/js/react_data_01.json';
-                setDataLoadingCount(dataLoadingCount + 1);
-                setLoadingState(true)
-              } else if(dataLoadingCount == 1){
-                getUrl = 'https://zzzmini.github.io/js/react_data_02.json';
-                setDataLoadingCount(dataLoadingCount + 1);
-                setLoadingState(true)
-              } else {
-                alert('데이터가 존재하지 않아요!')
-                return;
-              }
-
-              try{
-                const result = await axios(getUrl)
-                let temp = [... product, ... result.data];
-                setProduct(temp);
-              } catch (error){
-                console.log("가져오기 실패", error)
-              } finally {
-                setLoadingState(false)
-              }              
-
-              // 데이터를 3개 가져오는 함수
-              // axios
-              //   .get('https://zzzmini.github.io/js/react_data_01.json')
-              //   .then((result)=>{
-              //     let temp = [... product]
-              //     for(let x of result.data){
-              //       temp.push(x)
-              //     }
-              //     setProduct(temp)
-              //   })
-              //   .catch(()=>{
-              //     console.log("가져오기 실패")
-              //   })
-            }}>
-            데이터 가져오기</Button>
+      {/* 데이터 불러오기 버튼 */}
+      <div className="d-flex justify-content-center align-items-center">
+        <Button
+          variant="primary"
+          size="lg"
+          onClick={() => {
+            let getUrl = "";
+            if (dataLoadingCount === 0) {
+              getUrl = "https://zzzmini.github.io/js/react_data_01.json";
+              setDataLoadingCount(1);
+            } else if (dataLoadingCount === 1) {
+              getUrl = "https://zzzmini.github.io/js/react_data_02.json";
+              setDataLoadingCount(2);
+            } else {
+              alert("더 이상 데이터가 존재하지 않아요!");
+              return;
+            }
+            loadData(getUrl);
+          }}
+        >
+          데이터 가져오기
+        </Button>
       </div>
     </div>
-  )
+  );
 }
+
 export default Home;

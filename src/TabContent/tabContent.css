@@ -1,0 +1,129 @@
+.reviews {
+  margin-top: 20px;
+}
+
+.section-title {
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+.average-rating {
+  margin-bottom: 15px;
+  font-weight: bold;
+  color: #ff9800;
+}
+
+/* 리뷰 작성 폼 */
+.review-form {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.review-form input,
+.review-form textarea {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 14px;
+}
+
+.review-form textarea {
+  resize: none;
+  height: 80px;
+}
+
+.review-form button {
+  align-self: flex-end;
+  padding: 6px 14px;
+  background-color: #28a745;
+  border: none;
+  border-radius: 5px;
+  color: white;
+  cursor: pointer;
+}
+
+.review-form button:hover {
+  background-color: #218838;
+}
+
+/* 리뷰 리스트 */
+.review-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.review-item {
+  border-bottom: 1px solid #eee;
+  padding: 12px 0;
+  position: relative;
+}
+
+.review-header {
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+  margin-bottom: 5px;
+}
+
+.review-author {
+  font-weight: bold;
+}
+
+.review-date {
+  color: #777;
+  font-size: 12px;
+}
+
+.review-rating {
+  color: gold;
+  font-size: 16px;
+  margin-bottom: 6px;
+}
+
+.review-score {
+  font-size: 12px;
+  color: #555;
+  margin-left: 4px;
+}
+
+.review-content {
+  font-size: 14px;
+  margin: 4px 0 8px 0;
+}
+
+.delete-btn {
+  position: absolute;
+  top: 12px;
+  right: 0;
+  background: none;
+  border: none;
+  color: red;
+  cursor: pointer;
+  font-size: 12px;
+}
+
+/* ⭐ 별점 입력 (0.5 단위 지원) */
+.star-input {
+  font-size: 28px;
+  color: #ddd;
+  cursor: pointer;
+}
+
+.star {
+  margin-right: 4px;
+  color: #ddd;
+}
+
+.star.active,
+.star.half-active {
+  color: gold;
+}
+
+.rating-value {
+  font-size: 14px;
+  margin-left: 8px;
+  color: #555;
+}
