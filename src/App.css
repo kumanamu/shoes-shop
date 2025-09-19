@@ -1,0 +1,19 @@
+.main-bg {
+  height: 300px;
+  /* public 폴더에 있는 이미지는 절대참조 */
+  /* 루트는 public 폴더 가리킴. */
+  background-image: url('/images/bg.jpg');
+  background-size: cover;
+  background-position: center;
+}
+
+.ani_start {
+  /* 요소를 완전히 투명하게 시작 */
+  opacity: 0;
+}
+
+.ani_end {
+  /* 요소를 완전히 보이게 */
+  opacity: 1;
+  transition: opacity 0.5s;
+}
