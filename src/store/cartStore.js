@@ -1,12 +1,66 @@
 import { create } from "zustand";
 import { immer } from "zustand/middleware/immer";
 
+const cartStore = create(
+  immer((set) => ({
 const cartStore = create(immer((set)=>(
   {
     cartData: [
-      {id: 0, name: "White and Black", count: 2},
-      {id: 1, name: "Grey Nike", count: 1},
+      { id: 0, name: "White and Black", count: 2 },
+      { id: 1, name: "Grey Nike", count: 1 },
     ],
+
+    // 수량 증가
+    plusCount: (id) =>
+      set((state) => {
+        const item = state.cartData.find((x) => x.id === id);
+        if (item) {
+          item.count += 1;
+        }
+      }),
+
+    // 수량 감소 (최소 1 유지)
+    minusCount: (id) =>
+      set((state) => {
+        const item = state.cartData.find((x) => x.id === id);
+        if (item && item.count > 1) {
+          item.count -= 1;
+        }
+      }),
+
+    // 데이터 추가
+    addItem: (item) =>
+      set((state) => {
+        state.cartData.push(item);
+      }),
+
+    // 데이터 삭제
+    removeItem: (id) =>
+      set((state) => {
+        const idx = state.cartData.findIndex((x) => x.id === id);
+        if (idx !== -1) state.cartData.splice(idx, 1);
+      }),
+
+    // 데이터 수정
+    updateItem: (id, updates) =>
+      set((state) => {
+        const item = state.cartData.find((x) => x.id === id);
+        if (item) {
+          if (updates.name !== "") {
+            item.name = updates.name;
+          }
+          if (
+            typeof updates.count === "number" &&
+            !Number.isNaN(updates.count)
+          ) {
+            item.count = updates.count;
+          }
+        }
+      }),
+  }))
+);
+
+export default cartStore;
 
     addItem: (item) =>
       set((state) => {
