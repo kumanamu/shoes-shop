@@ -9,7 +9,7 @@ import { Link, useNavigate } from "react-router-dom";
 // import {UserContext} from "../context/UserContext.jsx"
 // import { useContext } from "react";
 
-import userStore from "../store/userStore";
+import userStore from "../Store/userStore";
 
 function AppNavBar(){
   // const {loginUser} = useContext(UserContext);
